@@ -36,9 +36,58 @@ pub mod lexer {
                 self.source.chars().nth(self.current_pos as usize).unwrap()
             }
         }
+        pub fn get_token(&self) {
+            if self.current_char == '+' {
+                return;
+            } else if self.current_char == '-' {
+                return;
+            } else if self.current_char == '*' {
+                return;
+            } else if self.current_char == '/' {
+                return;
+            } else if self.current_char == '\n' {
+                return;
+            } else if self.current_char == '\0' {
+                return;
+            } else {
+                return;
+            }
+        }
     }
 }
 
+pub mod token {
+    pub enum Token {
+        EOF,
+        NewLine,
+        Number,
+        Ident,
+        String,
+        Label,
+        GoTo,
+        Print,
+        Input,
+        Let,
+        If,
+        Then,
+        EndIf,
+        While,
+        Repeat,
+        EndWhile,
+        Equal,
+        Plus,
+        Minus,
+        Asterisk,
+        Slash,
+        EqualEqual,
+        NotEqual,
+        LessThan,
+        LessThanEqualTo,
+        GreaterThan,
+        GreaterThanEqualTo
+    }
+
+}
 fn main() {
     let mut lex = lexer::Lexer::new("Hello World".to_string());
     println!("{:?}", lex);
