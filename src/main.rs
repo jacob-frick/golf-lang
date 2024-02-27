@@ -1,6 +1,40 @@
 
+pub mod token {
+    pub enum Token {
+        EOF,
+        NewLine,
+        Number,
+        Ident,
+        String,
+        Label,
+        GoTo,
+        Print,
+        Input,
+        Let,
+        If,
+        Then,
+        EndIf,
+        While,
+        Repeat,
+        EndWhile,
+        Equal,
+        Plus,
+        Minus,
+        Asterisk,
+        Slash,
+        EqualEqual,
+        NotEqual,
+        LessThan,
+        LessThanEqualTo,
+        GreaterThan,
+        GreaterThanEqualTo,
+        InvalidToken
+    }
 
+}
 pub mod lexer {
+    use crate::token::Token;
+
     #[derive(Debug)]
     pub struct Lexer {
         pub source: String,
@@ -36,58 +70,31 @@ pub mod lexer {
                 self.source.chars().nth(self.current_pos as usize).unwrap()
             }
         }
-        pub fn get_token(&self) {
-            if self.current_char == '+' {
-                return;
-            } else if self.current_char == '-' {
-                return;
-            } else if self.current_char == '*' {
-                return;
-            } else if self.current_char == '/' {
-                return;
-            } else if self.current_char == '\n' {
-                return;
-            } else if self.current_char == '\0' {
-                return;
-            } else {
-                return;
-            }
+        pub fn get_token(&mut self) -> Token{
+            let mut token: Token = {
+                if self.current_char == '+' {
+                    Token::Plus
+                } else if self.current_char == '-' {
+                    Token:: Minus
+                } else if self.current_char == '*' {
+                    Token::Asterisk
+                } else if self.current_char == '/' {
+                    Token::Slash
+                } else if self.current_char == '\n' {
+                    Token::NewLine
+                } else if self.current_char == '\0' {
+                    Token::EOF
+                } else {
+                    Token::InvalidToken
+                }
+            };
+            self.next_char();
+            return token;
         }
     }
 }
 
-pub mod token {
-    pub enum Token {
-        EOF,
-        NewLine,
-        Number,
-        Ident,
-        String,
-        Label,
-        GoTo,
-        Print,
-        Input,
-        Let,
-        If,
-        Then,
-        EndIf,
-        While,
-        Repeat,
-        EndWhile,
-        Equal,
-        Plus,
-        Minus,
-        Asterisk,
-        Slash,
-        EqualEqual,
-        NotEqual,
-        LessThan,
-        LessThanEqualTo,
-        GreaterThan,
-        GreaterThanEqualTo
-    }
 
-}
 fn main() {
     let mut lex = lexer::Lexer::new("Hello World".to_string());
     println!("{:?}", lex);
